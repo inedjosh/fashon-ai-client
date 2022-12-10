@@ -14,7 +14,6 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Hide,
-  Link,
   Show,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -23,8 +22,9 @@ import HeadingText from "./TextElements/Heading";
 import { HiOutlineMenu } from "react-icons/hi";
 import PryBtn from "./UiElements/PryBtn";
 import { colors } from "../constants/colors";
+import { Link } from "react-router-dom";
 
-const Header = ({ title }) => {
+const Header = ({ title, link }) => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,27 +41,29 @@ const Header = ({ title }) => {
     >
       <Hide below={"md"}>
         {" "}
-        <HeadingText flex={".4"} color={"#fff"}>
-          FASHUN.AI
-        </HeadingText>
+        <Link to="/">
+          <HeadingText flex={".4"} color={"#fff"}>
+            FASHUN.AI
+          </HeadingText>
+        </Link>
         <UnorderedList
           display={"flex"}
-          flex={".2"}
+          flex={".3"}
           justifyContent={"space-between"}
         >
           <ListItem>
-            <Link fontSize={"20px"} color={"#fff"} href="/about">
+            <Link fontSize={"20px"} color={"#fff"} to="/about">
               About Us
             </Link>
           </ListItem>
           <ListItem>
-            <Link fontSize={"20px"} color={"#fff"} href="/faq">
+            <Link fontSize={"20px"} color={"#fff"} to="/faq">
               FAQ
             </Link>
           </ListItem>
         </UnorderedList>
         <Flex flex={".4"} justifyContent={"flex-end"}>
-          <PryBtn>{title}</PryBtn>
+          <PryBtn>{link ? <Link to={link}>{title}</Link> : title}</PryBtn>
         </Flex>
       </Hide>
       <Show below={"md"}>
@@ -96,32 +98,28 @@ const Header = ({ title }) => {
                 alignItems="center"
                 py="5"
                 flexDirection={"column"}
+                marginTop={"100px"}
               >
-                <ListItem>
-                  <Link href="/about">About Us</Link>
-                  <Link href="/faq">FAQ</Link>
+                <ListItem mb={"100px"} listStyleType={"none"}>
+                  <Link to="/" textTransform={"uppercase"}>
+                    FUNSHUN AI
+                  </Link>
+                </ListItem>
+                <ListItem mt={"50px"} listStyleType={"none"}>
+                  <Link to="/profile">Profile</Link>
+                </ListItem>
+                <ListItem mt={"50px"} listStyleType={"none"}>
+                  <Link to="/faq">FAQ</Link>
+                </ListItem>
+                <ListItem mt={"50px"} listStyleType={"none"}>
+                  <Link to="/about">About Us</Link>
                 </ListItem>
               </UnorderedList>
             </DrawerBody>
 
             <DrawerFooter>
               <Flex w={"100%"} justifyContent={"center"}>
-                <PryBtn px={"30px"}>
-                  <Link to="/login">Login</Link>
-                </PryBtn>
-                <Button
-                  ml={"15px"}
-                  border={"1px solid #8482FF"}
-                  bg={"#fff"}
-                  px={"30px"}
-                  color={"#8482FF"}
-                  borderRadius={"30px"}
-                  py={"25px"}
-                >
-                  <Link color={"#8482FF"} to="/signup">
-                    Signup
-                  </Link>
-                </Button>
+                <BodyText color={"#000"}>Funshun AI 2022</BodyText>
               </Flex>
             </DrawerFooter>
           </DrawerContent>

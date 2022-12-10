@@ -9,7 +9,7 @@ import ImageTransform from "./ImageTransform";
 import TextImage from "./TextImage";
 import { DataContext } from "../store/store";
 
-const StartUsing = () => {
+const StartUsing = ({ setPopup }) => {
   const [text, setText] = useState("");
   const [resultUrl, setResultUrl] = useState("");
   const [imgDescribtion, setImgDescription] = useState("");
@@ -24,42 +24,8 @@ const StartUsing = () => {
     setImageState(val);
   };
 
-  const textToImage = async () => {
-    console.log(img);
-    console.log(`${baseUrl}/image/text-image`);
-    setLoading(true);
-    const res = await fetch(`${baseUrl}/image/text-image`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    });
-
-    const resp = await res.json();
-    setLoading(false);
-    setResultUrl(resp.url);
-  };
-
-  const imageTransform = async () => {
-    setLoading(true);
-    try {
-      const imgData = new FormData();
-      imgData.append("image", img);
-      imgData.append("imgDescription", imgDescribtion);
-      imgData.append("id", "6386b1dfef108d0b5836c0fa");
-      const { data } = await axios.post(`${baseUrl}/image/transform`, imgData);
-
-      console.log(data);
-      setResultUrl(data.data.url);
-    } catch (error) {
-      console.log(error?.response?.data);
-    }
-    setLoading(false);
-  };
-
   return (
-    <Box>
+    <Box mb={"100px"}>
       <Flex
         flexDirection={"column"}
         justifyContent={"center"}
@@ -107,7 +73,13 @@ const StartUsing = () => {
           </Button>
         </Flex>
       </Flex>
-      <Box>{imageState === "image" ? <ImageTransform /> : <TextImage />}</Box>
+      <Box>
+        {imageState === "image" ? (
+          <ImageTransform setPopup={setPopup} />
+        ) : (
+          <TextImage setPopup={setPopup} />
+        )}
+      </Box>
     </Box>
   );
 };

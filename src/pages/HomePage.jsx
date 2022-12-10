@@ -1,22 +1,43 @@
-import React from 'react'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
-import Hero from '../components/Hero'
-import Hero2 from '../components/Hero2'
-import StartUsing from '../components/StartUsing'
-import WhatArePeopleSaying from '../components/WhatArePeopleSaying'
+import React, { useState, useContext, useEffect } from "react";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import Hero2 from "../components/Hero2";
+import StartUsing from "../components/StartUsing";
+import AuthPopup from "../components/AuthPopup";
+import WhatArePeopleSaying from "../components/WhatArePeopleSaying";
+import { DataContext } from "../store/store";
 
-const HomePage = () => {
+const HomePage = ({ popup, setPopup }) => {
+  const { state, dispatch } = useContext(DataContext);
+  const { auth, error, loading } = state;
+
+  const closePopup = () => {
+    setPopup(!popup);
+  };
+
   return (
-      <div>
-          <Header title='Go pro $' />
-          <Hero />
-          <StartUsing />
-          <Hero2 />
-          <WhatArePeopleSaying />
-          <Footer />
-      </div>
-  )
-}
+    <div>
+      <Header title="My Account" link="/profile" />
+      {popup && (
+        <AuthPopup
+          closePopup={closePopup}
+          loading={loading}
+          error={error}
+          dispatch={dispatch}
+        />
+      )}
+      <Hero
+        dispatch={dispatch}
+        email={auth.email}
+        accountType={auth.accountType}
+      />
+      <StartUsing setPopup={setPopup} />
+      <Hero2 />
+      <WhatArePeopleSaying />
+      <Footer />
+    </div>
+  );
+};
 
-export default HomePage
+export default HomePage;
