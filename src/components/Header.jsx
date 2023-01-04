@@ -24,7 +24,7 @@ import PryBtn from "./UiElements/PryBtn";
 import { colors } from "../constants/colors";
 import { Link } from "react-router-dom";
 
-const Header = ({ title, link }) => {
+const Header = ({ auth }) => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -63,7 +63,17 @@ const Header = ({ title, link }) => {
           </ListItem>
         </UnorderedList>
         <Flex flex={".4"} justifyContent={"flex-end"}>
-          <PryBtn>{link ? <Link to={link}>{title}</Link> : title}</PryBtn>
+          {auth ? (
+            <PryBtn>
+              {" "}
+              <Link to="/profile">My Account</Link>{" "}
+            </PryBtn>
+          ) : (
+            <PryBtn>
+              {" "}
+              <Link to="/auth">Signup</Link>
+            </PryBtn>
+          )}
         </Flex>
       </Hide>
       <Show below={"md"}>

@@ -49,7 +49,7 @@ function ImageTransform({ setPopup }) {
         toast.error("Please select an image");
       }
 
-      if (state.auth.trials < 1) {
+      if (state.auth.trials === 0) {
         toast.error("You have exceeded the maximum number of trials");
         return setError("You have used up your trials");
       }
@@ -86,7 +86,7 @@ function ImageTransform({ setPopup }) {
       flexDirection={"column"}
     >
       {resultUrl ? (
-        <Image src={resultUrl} />
+        <Image src={resultUrl} w={["90%", "90%", "95%"]} h={"350px"} />
       ) : (
         <Box w={["100%", "100%", "70%"]}>
           <Box>
@@ -142,7 +142,11 @@ function ImageTransform({ setPopup }) {
             justifyContent={"center"}
           >
             <PryBtn
-              onClick={!state.auth.email ? setPopup : imageTransform}
+              onClick={
+                !state.auth.email && !state.auth.verified
+                  ? setPopup
+                  : imageTransform
+              }
               bg={"#791AE9"}
               w={["90%", "90%", "60%"]}
             >

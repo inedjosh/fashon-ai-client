@@ -139,7 +139,13 @@ function TextImage({ setPopup }) {
       mb={"40px"}
     >
       {resultUrl ? (
-        <Image src={resultUrl} borderRadius={"20px"} />
+        <Image
+          src={resultUrl}
+          borderRadius={"20px"}
+          w={["90%", "90%", "95%"]}
+          h={"400px"}
+          objectFit={"cover"}
+        />
       ) : (
         <Flex
           w={"100%"}

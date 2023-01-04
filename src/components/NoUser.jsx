@@ -37,15 +37,6 @@ function NoUser() {
   const { state, dispatch } = useContext(DataContext);
   const { error } = state;
 
-  const handleAuth = async () => {
-    setLoading(false);
-    const res = await authenticateUser(email, dispatch);
-    setLoading(true);
-    if (!res) toast.error("Authentication failed");
-
-    if (res) toast.success("Authentication successful");
-  };
-
   return (
     <Box h={"100vh"}>
       <Header title="hello" link="/profile" />
@@ -57,41 +48,6 @@ function NoUser() {
       >
         <BodyText py={"20px"}>No user is logged in.</BodyText>
         <PryBtn onClick={onOpen}>Login Now</PryBtn>
-
-        <Modal
-          initialFocusRef={initialRef}
-          finalFocusRef={finalRef}
-          isOpen={isOpen}
-          onClose={onClose}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Enter your email to get started </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>Email</FormLabel>
-                <Input
-                  ref={initialRef}
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {error && (
-                  <BodyText fontSize={"12px"} color={"red"} mr={"20px"}>
-                    {error}
-                  </BodyText>
-                )}
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter display={"flex"} justifyContent={"space-between"}>
-              <PryBtn colorScheme="blue" mr={3} onClick={handleAuth}>
-                {loading ? <Spinner /> : "Get started"}
-              </PryBtn>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
       </Flex>
     </Box>
   );
